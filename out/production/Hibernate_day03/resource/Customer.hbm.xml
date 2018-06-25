@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.huhu.domain">
+    <class name="com.huhu.domain.Customer" table="t_customer">
+        <id name="id" column="id">
+            <generator class="native"></generator>
+        </id>
+        <property name="name" column="name" type="java.lang.String"></property>
+        <!--
+            lazy:是否对set数据使用懒加载
+
+                 true：（默认）对集合使用懒加载
+                 false：集合将会被立即加载
+
+            fetch:查询方法
+
+                select：（默认）表连接语句查询集合数据
+                subselect：使用子查询加载集合数据
+                join：使用多表查询，左外连接查询
+        -->
+        <set name="orders" batch-size="6">
+            <key column="cid"/>
+            <!--表达customer与orders时一对多关系-->
+            <one-to-many class="Order"/>
+        </set>
+    </class>
+</hibernate-mapping>
